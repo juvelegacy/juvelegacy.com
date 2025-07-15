@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juve Legacy - Official Juventus Fan Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .juve-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 30%, #2a2a2a 70%, #000000 100%);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.04) 0%, transparent 50%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+        
+        .stats-counter {
+            animation: countUp 2s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-ring {
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modern-shadow {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass-effect z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-white to-gray-200 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">Juve Legacy</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-gray-300 transition-all duration-300 font-medium">Home</a>
+                    <a href="#players" class="hover:text-gray-300 transition-all duration-300 font-medium">Players</a>
+                    <a href="#history" class="hover:text-gray-300 transition-all duration-300 font-medium">History</a>
+                    <a href="#news" class="hover:text-gray-300 transition-all duration-300 font-medium">News</a>
+                    <a href="#stats" class="hover:text-gray-300 transition-all duration-300 font-medium">Stats</a>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden glass-effect p-2 rounded-lg">
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 right-0 glass-effect mx-4 rounded-2xl p-6 modern-shadow">
+                    <div class="flex flex-col space-y-4">
+                        <a href="#home" onclick="closeMobileMenu()" class="hover:text-gray-300 transition-all duration-300 font-medium py-2">Home</a>
+                        <a href="#players" onclick="closeMobileMenu()" class="hover:text-gray-300 transition-all duration-300 font-medium py-2">Players</a>
+                        <a href="#history" onclick="closeMobileMenu()" class="hover:text-gray-300 transition-all duration-300 font-medium py-2">History</a>
+                        <a href="#news" onclick="closeMobileMenu()" class="hover:text-gray-300 transition-all duration-300 font-medium py-2">News</a>
+                        <a href="#stats" onclick="closeMobileMenu()" class="hover:text-gray-300 transition-all duration-300 font-medium py-2">Stats</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="juve-gradient hero-pattern min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="200" r="100" fill="white" opacity="0.1"/>
+                <circle cx="1000" cy="600" r="150" fill="white" opacity="0.05"/>
+                <circle cx="600" cy="100" r="80" fill="white" opacity="0.08"/>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="floating mb-12">
+                <div class="pulse-ring inline-block">
+                    <div class="w-40 h-40 bg-gradient-to-br from-white via-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mx-auto modern-shadow">
+                        <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 10L20 25V75L50 90L80 75V25L50 10Z" fill="black" stroke="black" stroke-width="2"/>
+                            <text x="50" y="58" text-anchor="middle" fill="white" font-size="24" font-weight="bold">J</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight">
+                <span class="gradient-text block">JUVE</span>
+                <span class="gradient-text block">LEGACY</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+                Experience the ultimate Juventus journey. From legendary moments to future glory, 
+                celebrating the Old Lady's unmatched heritage and passionate fanbase worldwide.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button onclick="showTimeline()" class="bg-white text-black px-10 py-5 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 modern-shadow">
+                    Explore Legacy
+                </button>
+                <button onclick="showDashboard()" class="glass-effect px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    Latest Updates
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Timeline Section (Hidden by default) -->
+    <section id="timeline-section" class="py-24 bg-gradient-to-b from-gray-900 via-black to-gray-900 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-black gradient-text mb-6">Interactive Legacy Timeline</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">Explore 127 years of Juventus history</p>
+                <button onclick="closeTimeline()" class="mt-4 glass-effect px-6 py-3 rounded-xl hover:bg-white/10 transition-all">
+                    ← Back to Home
+                </button>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-white via-gray-400 to-white opacity-30"></div>
+                
+                <!-- Timeline Events -->
+                <div class="space-y-20">
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('1897')">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">Foundation Era</h3>
+                                <p class="text-gray-400">Born from student passion in Turin</p>
+                            </div>
+                        </div>
+                        <div class="w-20 h-20 glass-effect rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-xl font-black">1897</span>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('1950s')">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-20 h-20 glass-effect rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-lg font-black">1950s</span>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">Golden Dynasty</h3>
+                                <p class="text-gray-400">5 consecutive Serie A titles</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('1985')">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">European Glory</h3>
+                                <p class="text-gray-400">First Champions Cup triumph</p>
+                            </div>
+                        </div>
+                        <div class="w-20 h-20 glass-effect rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-xl font-black">1985</span>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('1990s')">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-20 h-20 glass-effect rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-lg font-black">1990s</span>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">Dream Team Era</h3>
+                                <p class="text-gray-400">Baggio, Del Piero, Zidane magic</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('2010s')">
+                        <div class="w-5/12 text-right pr-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">Nine in a Row</h3>
+                                <p class="text-gray-400">Unprecedented domestic dominance</p>
+                            </div>
+                        </div>
+                        <div class="w-20 h-20 glass-effect rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-lg font-black">2010s</span>
+                        </div>
+                        <div class="w-5/12 pl-8"></div>
+                    </div>
+                    
+                    <div class="timeline-item flex items-center justify-between group cursor-pointer" onclick="showTimelineDetail('2025')">
+                        <div class="w-5/12 pr-8"></div>
+                        <div class="w-20 h-20 bg-gradient-to-br from-white to-gray-200 rounded-full flex items-center justify-center relative z-10 group-hover:scale-110 transition-all">
+                            <span class="text-lg font-black text-black">2025</span>
+                        </div>
+                        <div class="w-5/12 text-left pl-8">
+                            <div class="glass-effect p-6 rounded-2xl modern-shadow group-hover:scale-105 transition-all border-2 border-white/20">
+                                <h3 class="text-2xl font-bold gradient-text mb-2">New Chapter</h3>
+                                <p class="text-gray-400">Conceição era begins</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Dashboard Section (Hidden by default) -->
+    <section id="news-dashboard" class="py-24 bg-gradient-to-b from-gray-900 via-black to-gray-900 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-black gradient-text mb-6">Live News Dashboard</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">Real-time updates from the Juventus world</p>
+                <button onclick="closeDashboard()" class="mt-4 glass-effect px-6 py-3 rounded-xl hover:bg-white/10 transition-all">
+                    ← Back to Home
+                </button>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Transfer Tracker -->
+                <div class="lg:col-span-2">
+                    <div class="glass-effect rounded-3xl p-8 modern-shadow">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-3xl font-bold gradient-text">🔄 Transfer Tracker</h3>
+                            <div class="glass-effect px-4 py-2 rounded-full">
+                                <span class="text-sm font-bold text-green-400">● LIVE</span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="glass-effect p-6 rounded-2xl border-l-4 border-green-400">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="text-xl font-bold text-green-400">✅ CONFIRMED</h4>
+                                    <span class="text-sm text-gray-400">2 hours ago</span>
+                                </div>
+                                <p class="text-white font-semibold mb-2">Jonathan David - €40M from Lille</p>
+                                <p class="text-gray-400 text-sm">5-year contract, medical completed, announcement imminent</p>
+                            </div>
+                            
+                            <div class="glass-effect p-6 rounded-2xl border-l-4 border-yellow-400">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="text-xl font-bold text-yellow-400">⏳ IN PROGRESS</h4>
+                                    <span class="text-sm text-gray-400">4 hours ago</span>
+                                </div>
+                                <p class="text-white font-semibold mb-2">Jadon Sancho - Loan from Man United</p>
+                                <p class="text-gray-400 text-sm">€5M loan fee + €25M option to buy, personal terms agreed</p>
+                            </div>
+                            
+                            <div class="glass-effect p-6 rounded-2xl border-l-4 border-blue-400">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="text-xl font-bold text-blue-400">👀 MONITORING</h4>
+                                    <span class="text-sm text-gray-400">1 day ago</span>
+                                </div>
+                                <p class="text-white font-semibold mb-2">Defensive Midfielder Target</p>
+                                <p class="text-gray-400 text-sm">Several Serie A options being evaluated for summer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Stats & Fixtures -->
+                <div class="space-y-8">
+                    <!-- Next Fixtures -->
+                    <div class="glass-effect rounded-3xl p-6 modern-shadow">
+                        <h3 class="text-2xl font-bold gradient-text mb-6">📅 Next Fixtures</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 glass-effect rounded-xl">
+                                <div>
+                                    <p class="font-bold">vs Inter Milan</p>
+                                    <p class="text-sm text-gray-400">Serie A - Away</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold">Mar 10</p>
+                                    <p class="text-sm text-gray-400">20:45</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-4 glass-effect rounded-xl">
+                                <div>
+                                    <p class="font-bold">vs AC Milan</p>
+                                    <p class="text-sm text-gray-400">Serie A - Home</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold">Mar 17</p>
+                                    <p class="text-sm text-gray-400">18:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Stats -->
+                    <div class="glass-effect rounded-3xl p-6 modern-shadow">
+                        <h3 class="text-2xl font-bold gradient-text mb-6">📊 Season Stats</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">League Position</span>
+                                <span class="font-bold text-2xl">3rd</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">Points</span>
+                                <span class="font-bold text-2xl">45</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">Goals Scored</span>
+                                <span class="font-bold text-2xl">38</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">Clean Sheets</span>
+                                <span class="font-bold text-2xl">12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Breaking News Ticker -->
+            <div class="mt-12 glass-effect rounded-2xl p-6 modern-shadow">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-red-500 px-4 py-2 rounded-full">
+                        <span class="font-bold text-sm">BREAKING</span>
+                    </div>
+                    <div class="flex-1 overflow-hidden">
+                        <div class="animate-marquee whitespace-nowrap">
+                            <span class="text-lg">🚨 Conceição confirms David will wear number 21 • Sancho medical scheduled for Friday • Chiesa contract extension talks ongoing • Fagioli impressing in training • New stadium plans to be revealed next month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="py-24 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold gradient-text mb-4">Championship Legacy</h2>
+                <p class="text-gray-400 text-lg">Numbers that define greatness</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="stats-counter glass-effect rounded-3xl p-8 text-center modern-shadow">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="black"/>
+                        </svg>
+                    </div>
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2">36</div>
+                    <div class="text-gray-400 uppercase tracking-wider font-medium">Serie A Titles</div>
+                </div>
+                
+                <div class="stats-counter glass-effect rounded-3xl p-8 text-center modern-shadow">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 2L18 9H13V22H11V9H6Z" fill="black"/>
+                        </svg>
+                    </div>
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2">14</div>
+                    <div class="text-gray-400 uppercase tracking-wider font-medium">Coppa Italia</div>
+                </div>
+                
+                <div class="stats-counter glass-effect rounded-3xl p-8 text-center modern-shadow">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="black"/>
+                            <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2">2</div>
+                    <div class="text-gray-400 uppercase tracking-wider font-medium">Champions League</div>
+                </div>
+                
+                <div class="stats-counter glass-effect rounded-3xl p-8 text-center modern-shadow">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="black"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="white" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="text-4xl md:text-5xl font-black text-white mb-2">1897</div>
+                    <div class="text-gray-400 uppercase tracking-wider font-medium">Founded</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Section -->
+    <section id="players" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-black gradient-text mb-6">Legendary Icons</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">The greatest players who wore the sacred black and white stripes</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="card-hover glass-effect rounded-3xl p-8 modern-shadow">
+                    <div class="relative mb-8">
+                        <div class="w-32 h-32 bg-gradient-to-br from-white to-gray-200 rounded-3xl overflow-hidden mx-auto modern-shadow flex items-center justify-center">
+                            <svg width="80" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Football Boot -->
+                                <path d="M20 45 L25 40 L35 38 L50 40 L65 45 L75 50 L80 55 L75 60 L65 62 L50 60 L35 58 L25 55 L20 50 Z" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+                                <!-- Boot sole -->
+                                <path d="M22 50 L27 48 L40 47 L55 48 L70 52 L75 55 L70 58 L55 57 L40 56 L27 57 L22 55 Z" fill="#000000"/>
+                                <!-- Laces -->
+                                <line x1="35" y1="42" x2="45" y2="40" stroke="white" stroke-width="2"/>
+                                <line x1="40" y1="44" x2="50" y2="42" stroke="white" stroke-width="2"/>
+                                <line x1="45" y1="46" x2="55" y2="44" stroke="white" stroke-width="2"/>
+                                <!-- Studs -->
+                                <circle cx="30" cy="53" r="2" fill="#333"/>
+                                <circle cx="40" cy="52" r="2" fill="#333"/>
+                                <circle cx="50" cy="52" r="2" fill="#333"/>
+                                <circle cx="60" cy="53" r="2" fill="#333"/>
+                                <circle cx="70" cy="55" r="2" fill="#333"/>
+                                <!-- Nike swoosh -->
+                                <path d="M45 48 Q52 46 58 50" stroke="#FFD700" stroke-width="3" fill="none"/>
+                                <!-- Number 7 -->
+                                <text x="50" y="35" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">CR7</text>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                            <span class="text-black text-xs font-bold">★</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-center mb-2 gradient-text">Cristiano Ronaldo</h3>
+                    <p class="text-gray-400 text-center mb-6 font-medium">Forward • 2018-2021</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Goals</span>
+                            <span class="font-bold text-xl">101</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Appearances</span>
+                            <span class="font-bold text-xl">134</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Trophies</span>
+                            <span class="font-bold text-xl">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover glass-effect rounded-3xl p-8 modern-shadow">
+                    <div class="relative mb-8">
+                        <div class="w-32 h-32 bg-gradient-to-br from-white to-gray-200 rounded-3xl overflow-hidden mx-auto modern-shadow flex items-center justify-center">
+                            <svg width="80" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Football Boot -->
+                                <path d="M20 45 L25 40 L35 38 L50 40 L65 45 L75 50 L80 55 L75 60 L65 62 L50 60 L35 58 L25 55 L20 50 Z" fill="#0066cc" stroke="#004499" stroke-width="2"/>
+                                <!-- Boot sole -->
+                                <path d="M22 50 L27 48 L40 47 L55 48 L70 52 L75 55 L70 58 L55 57 L40 56 L27 57 L22 55 Z" fill="#003366"/>
+                                <!-- Laces -->
+                                <line x1="35" y1="42" x2="45" y2="40" stroke="white" stroke-width="2"/>
+                                <line x1="40" y1="44" x2="50" y2="42" stroke="white" stroke-width="2"/>
+                                <line x1="45" y1="46" x2="55" y2="44" stroke="white" stroke-width="2"/>
+                                <!-- Studs -->
+                                <circle cx="30" cy="53" r="2" fill="#333"/>
+                                <circle cx="40" cy="52" r="2" fill="#333"/>
+                                <circle cx="50" cy="52" r="2" fill="#333"/>
+                                <circle cx="60" cy="53" r="2" fill="#333"/>
+                                <circle cx="70" cy="55" r="2" fill="#333"/>
+                                <!-- Adidas stripes -->
+                                <line x1="52" y1="45" x2="58" y2="48" stroke="white" stroke-width="2"/>
+                                <line x1="54" y1="47" x2="60" y2="50" stroke="white" stroke-width="2"/>
+                                <line x1="56" y1="49" x2="62" y2="52" stroke="white" stroke-width="2"/>
+                                <!-- Number 10 -->
+                                <text x="50" y="35" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">ADP</text>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">♔</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-center mb-2 gradient-text">Alessandro Del Piero</h3>
+                    <p class="text-gray-400 text-center mb-6 font-medium">Forward • 1993-2012</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Goals</span>
+                            <span class="font-bold text-xl">290</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Appearances</span>
+                            <span class="font-bold text-xl">705</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Trophies</span>
+                            <span class="font-bold text-xl">19</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-hover glass-effect rounded-3xl p-8 modern-shadow">
+                    <div class="relative mb-8">
+                        <div class="w-32 h-32 bg-gradient-to-br from-white to-gray-200 rounded-3xl overflow-hidden mx-auto modern-shadow flex items-center justify-center">
+                            <svg width="80" height="80" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Goalkeeper Gloves -->
+                                <ellipse cx="35" cy="40" rx="18" ry="25" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+                                <ellipse cx="65" cy="40" rx="18" ry="25" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+                                <!-- Glove details -->
+                                <rect x="28" y="30" width="14" height="20" fill="#FFA500" rx="2"/>
+                                <rect x="58" y="30" width="14" height="20" fill="#FFA500" rx="2"/>
+                                <!-- Fingers -->
+                                <rect x="30" y="20" width="3" height="15" fill="#FFD700" rx="1"/>
+                                <rect x="34" y="18" width="3" height="17" fill="#FFD700" rx="1"/>
+                                <rect x="38" y="20" width="3" height="15" fill="#FFD700" rx="1"/>
+                                <rect x="60" y="20" width="3" height="15" fill="#FFD700" rx="1"/>
+                                <rect x="64" y="18" width="3" height="17" fill="#FFD700" rx="1"/>
+                                <rect x="68" y="20" width="3" height="15" fill="#FFD700" rx="1"/>
+                                <!-- Wrist straps -->
+                                <rect x="25" y="55" width="20" height="8" fill="#000000" rx="2"/>
+                                <rect x="55" y="55" width="20" height="8" fill="#000000" rx="2"/>
+                                <!-- Brand logo -->
+                                <circle cx="35" cy="40" r="6" fill="#000000"/>
+                                <circle cx="65" cy="40" r="6" fill="#000000"/>
+                                <text x="35" y="44" text-anchor="middle" fill="#FFD700" font-size="8" font-weight="bold">1</text>
+                                <text x="65" y="44" text-anchor="middle" fill="#FFD700" font-size="8" font-weight="bold">1</text>
+                                <!-- Number 1 -->
+                                <text x="50" y="15" text-anchor="middle" fill="#000000" font-size="16" font-weight="bold">GIGI</text>
+                            </svg>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-green-400 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">🥅</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-center mb-2 gradient-text">Gianluigi Buffon</h3>
+                    <p class="text-gray-400 text-center mb-6 font-medium">Goalkeeper • 2001-2018</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Clean Sheets</span>
+                            <span class="font-bold text-xl">300</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Appearances</span>
+                            <span class="font-bold text-xl">685</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 glass-effect rounded-xl">
+                            <span class="font-medium">Trophies</span>
+                            <span class="font-bold text-xl">26</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Timeline -->
+    <section id="history" class="py-24 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-black gradient-text mb-6">Historic Journey</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">Milestones that shaped the legend</p>
+            </div>
+            
+            <div class="space-y-16">
+                <div class="flex items-center space-x-12 group">
+                    <div class="w-32 h-32 glass-effect rounded-3xl flex items-center justify-center flex-shrink-0 modern-shadow group-hover:scale-110 transition-transform duration-300">
+                        <div class="text-center">
+                            <div class="text-2xl font-black text-white">1897</div>
+                            <div class="text-xs text-gray-400 mt-1">FOUNDED</div>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">The Beginning</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Juventus Football Club was founded in Turin by a group of passionate students, beginning a legacy that would span over a century of excellence and triumph.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-12 group">
+                    <div class="w-32 h-32 glass-effect rounded-3xl flex items-center justify-center flex-shrink-0 modern-shadow group-hover:scale-110 transition-transform duration-300">
+                        <div class="text-center">
+                            <div class="text-2xl font-black text-white">1985</div>
+                            <div class="text-xs text-gray-400 mt-1">VICTORY</div>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">European Glory</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">First European Cup triumph, defeating Liverpool 1-0 in Brussels. A historic moment that established Juventus as a continental powerhouse.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-12 group">
+                    <div class="w-32 h-32 glass-effect rounded-3xl flex items-center justify-center flex-shrink-0 modern-shadow group-hover:scale-110 transition-transform duration-300">
+                        <div class="text-center">
+                            <div class="text-2xl font-black text-white">1996</div>
+                            <div class="text-xs text-gray-400 mt-1">CHAMPIONS</div>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">Champions League</h3>
+                        <p class="text-gray-400 text-lg leading-relaxed">Second European Cup/Champions League title, beating Ajax on penalties in Rome. The pinnacle of 90s football excellence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="py-24 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-black gradient-text mb-6">Latest Updates</h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">Stay connected with the latest Juventus news and developments</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <article class="card-hover glass-effect rounded-3xl overflow-hidden modern-shadow">
+                    <div class="h-64 bg-gradient-to-br from-red-700 via-red-600 to-red-500 flex items-center justify-center relative">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 21V19C16 16.79 14.21 15 12 15S8 16.79 8 19V21" stroke="white" stroke-width="2"/>
+                            <circle cx="12" cy="7" r="4" stroke="white" stroke-width="2"/>
+                        </svg>
+                        <div class="absolute top-4 right-4 glass-effect px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">BREAKING</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Jonathan David Signs!</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">OFFICIAL: Jonathan David joins Juventus from Lille OSC on a 5-year deal! The Canadian striker brings pace, clinical finishing, and Champions League experience. Conceição also confirmed as new manager, replacing Allegri. Sancho loan talks with Manchester United progressing well for January window.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 font-medium">2 hours ago</span>
+                            <button onclick="showDetailedTransferNews()" class="text-white hover:text-gray-300 transition-colors cursor-pointer font-medium">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card-hover glass-effect rounded-3xl overflow-hidden modern-shadow">
+                    <div class="h-64 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-500 flex items-center justify-center relative">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 2L18 9H13V22H11V9H6Z" fill="white"/>
+                        </svg>
+                        <div class="absolute top-4 right-4 glass-effect px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">SERIE A</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Serie A Campaign</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Juventus currently sits in 3rd place with strong performances from Vlahović and Chiesa. The team shows great promise under Allegri's tactical system, focusing on solid defense and quick counter-attacks. Key upcoming matches against Inter and Milan will determine our Champions League qualification chances.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 font-medium">5 hours ago</span>
+                            <button onclick="showDetailedSerieANews()" class="text-white hover:text-gray-300 transition-colors cursor-pointer font-medium">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card-hover glass-effect rounded-3xl overflow-hidden modern-shadow">
+                    <div class="h-64 bg-gradient-to-br from-purple-700 via-purple-600 to-purple-500 flex items-center justify-center relative">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="16" rx="2" stroke="white" stroke-width="2" fill="none"/>
+                            <circle cx="8" cy="8" r="1" fill="white"/>
+                            <circle cx="12" cy="8" r="1" fill="white"/>
+                            <circle cx="16" cy="8" r="1" fill="white"/>
+                            <circle cx="8" cy="12" r="1" fill="white"/>
+                            <circle cx="16" cy="12" r="1" fill="white"/>
+                            <circle cx="8" cy="16" r="1" fill="white"/>
+                            <circle cx="12" cy="16" r="1" fill="white"/>
+                            <circle cx="16" cy="16" r="1" fill="white"/>
+                        </svg>
+                        <div class="absolute top-4 right-4 glass-effect px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold">SQUAD</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Starting XI 2025/26</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Conceição's preferred 4-3-3 formation features Di Gregorio in goal, Cambiaso-Bremer-Gatti-Cabal defense, Locatelli-Thuram-McKennie midfield, and Yildiz-David-Vlahović attack. Sancho expected to rotate with wingers. Strong squad depth with Fagioli, Weah, and Koopmeiners providing quality options.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500 font-medium">1 day ago</span>
+                            <button onclick="showDetailedSquadNews()" class="text-white hover:text-gray-300 transition-colors cursor-pointer font-medium">Read More →</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-t from-black via-gray-900 to-black py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-4 mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-white to-gray-200 rounded-2xl flex items-center justify-center modern-shadow">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-3xl font-black gradient-text">Juve Legacy</span>
+                </div>
+                
+                <p class="text-gray-400 mb-8 text-lg max-w-2xl mx-auto">
+                    The ultimate Juventus fan experience. Celebrating passion, heritage, and the eternal spirit of the Old Lady. 
+                    <span class="font-bold text-white">Fino alla fine!</span>
+                </p>
+                
+                <div class="flex justify-center mb-10">
+                    <a href="https://instagram.com/juve.legacy" target="_blank" class="glass-effect p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 transform hover:scale-110">
+                        <span class="text-white font-bold text-lg">📸 @juve.legacy</span>
+                    </a>
+                </div>
+                
+                <div class="border-t border-white/10 pt-8">
+                    <p class="text-gray-500 text-sm">© 2025 Juve Legacy. Unofficial fan page created with passion. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Advanced navigation effects
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            const scrolled = window.scrollY > 50;
+            
+            if (scrolled) {
+                nav.style.background = 'rgba(0, 0, 0, 0.95)';
+                nav.style.backdropFilter = 'blur(30px)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.05)';
+                nav.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Enhanced stats animation
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = Math.random() * 0.8 + 's';
+                    entry.target.classList.add('stats-counter');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('#stats .stats-counter').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('#home');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Card interaction effects
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Mobile Menu Functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            mobileMenu.classList.add('hidden');
+            menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+        }
+
+        // Enhanced News article popup functions
+        function showDetailedTransferNews() {
+            alert(`🚨 BREAKING TRANSFER NEWS - FULL DETAILS\n\n✅ JONATHAN DAVID - CONFIRMED SIGNING:\n• Transfer Fee: €40M + €10M bonuses\n• Contract: 5 years (until June 2030)\n• Salary: €6M per year + bonuses\n• Jersey Number: 21\n• Medical: Completed at J|Medical\n• Announcement: Official tomorrow\n\n📊 PLAYER PROFILE:\n• Age: 25 years old\n• Position: Striker/Left Winger\n• Height: 1.80m\n• Previous Club: Lille OSC (2020-2025)\n• 2024/25 Stats: 25 goals, 8 assists in 34 games\n• International: 35 caps, 28 goals for Canada\n\n👨‍💼 SÉRGIO CONCEIÇÃO - NEW MANAGER:\n• Appointed: January 15, 2025\n• Contract: 2.5 years + 1 year option\n• Previous Club: FC Porto (2017-2024)\n• Trophies Won: 11 (including Champions League)\n• Philosophy: High-intensity 4-3-3 formation\n• First Training: January 20, 2025\n\n🎯 JADON SANCHO - LOAN PROGRESS:\n• Status: 90% Complete\n• Loan Fee: €5M for 6 months\n• Option to Buy: €25M (mandatory if CL qualification)\n• Salary Split: 70% Juventus, 30% Manchester United\n• Medical: Scheduled for Friday\n• Competition: Competing with Yildiz and Weah\n\n💰 FINANCIAL DETAILS:\n• Total January Spending: €45M\n• Remaining Budget: €25M\n• FFP Status: Compliant\n• Next Priority: Defensive midfielder\n• Summer Plans: €80M budget confirmed\n\n🔄 OUTGOING TRANSFERS:\n• Moise Kean: €15M to Fiorentina (permanent)\n• Arthur Melo: Loan to Real Betis\n• Mattia De Sciglio: Released\n• Total Savings: €12M in wages`);
+        }
+
+        function showDetailedSerieANews() {
+            alert(`⚽ SERIE A CAMPAIGN 2024/25 - COMPLETE ANALYSIS\n\n📊 CURRENT STANDINGS (After 22 matches):\n• Position: 3rd Place\n• Points: 45 (Gap to 1st: 8 points)\n• Wins: 13 | Draws: 6 | Losses: 3\n• Goals For: 38 | Goals Against: 20\n• Goal Difference: +18\n• Form (Last 5): W-W-D-W-L\n\n🌟 TOP PERFORMERS THIS SEASON:\n• Dušan Vlahović: 12 goals, 3 assists (2,100 mins)\n• Federico Chiesa: 8 goals, 6 assists (1,890 mins)\n• Kenan Yıldız: 6 goals, 4 assists (1,650 mins)\n• Adrien Rabiot: 5 goals, 4 assists (1,980 mins)\n• Weston McKennie: 4 goals, 3 assists (1,560 mins)\n• Michele Di Gregorio: 12 clean sheets\n\n📈 TACTICAL ANALYSIS:\n• Formation: 4-3-3 / 4-2-3-1\n• Possession Average: 58%\n• Pass Accuracy: 87%\n• Shots per Game: 14.2\n• Defensive Actions: 52 per game\n• Set Piece Goals: 8 (League's 2nd best)\n\n🎯 UPCOMING CRUCIAL FIXTURES:\n• March 10: vs Inter Milan (Away) - 20:45\n  Derby d'Italia, crucial for Champions League race\n• March 17: vs AC Milan (Home) - 18:00\n  Must-win to maintain top 4 position\n• March 24: vs Napoli (Away) - 20:45\n  Direct competitor for Champions League\n• April 7: vs Atalanta (Home) - 15:00\n  Another top 4 rival\n\n🏆 SEASON OBJECTIVES:\n• Primary: Secure Champions League qualification (Top 4)\n• Secondary: Coppa Italia progression (Quarter-finals)\n• Tertiary: Close gap to title contenders\n• Long-term: Build foundation for 2025/26 title challenge\n\n⚠️ INJURY UPDATES:\n• Paul Pogba: Long-term injury (Expected return: April)\n• Nicolò Fagioli: Minor knock (Available for Inter)\n• Juan Cabal: Rotation management\n• All other players: Fully fit\n\n📊 CHAMPIONS LEAGUE RACE:\n1. Inter Milan - 53 points\n2. AC Milan - 47 points\n3. JUVENTUS - 45 points\n4. Atalanta - 44 points\n5. Roma - 41 points`);
+        }
+
+        function showDetailedSquadNews() {
+            alert(`⚽ JUVENTUS 2025/26 COMPLETE SQUAD ANALYSIS\n\n👨‍💼 MANAGER: Sérgio Conceição\n• System: 4-3-3 / 4-2-3-1\n• Philosophy: High pressing, quick transitions\n• Training Focus: Intensity and tactical discipline\n\n🥅 GOALKEEPERS:\n• Michele Di Gregorio (26) - 1st Choice\n  Former Monza, excellent shot-stopper\n• Mattia Perin (32) - Experienced backup\n  Reliable deputy, cup competitions\n• Carlo Pinsoglio (35) - 3rd choice veteran\n\n🛡️ DEFENDERS:\n• Andrea Cambiaso (25) - LB/RB versatile\n  Pace and crossing ability, key player\n• Gleison Bremer (28) - CB leader\n  Aerial dominance, defensive rock\n• Federico Gatti (26) - CB partnership\n  Solid defender, good with ball\n• Juan Cabal (24) - LB attacking option\n  Colombian international, pace\n• Danilo (33) - CB/RB captain\n  Leadership and experience\n• Pierre Kalulu (25) - CB/RB utility\n  French defender, tactical flexibility\n\n⚙️ MIDFIELDERS:\n• Manuel Locatelli (27) - CDM anchor\n  Italian international, passing range\n• Khéphren Thuram (24) - CM box-to-box\n  French talent, physical presence\n• Weston McKennie (26) - CM goal threat\n  American international, aerial ability\n• Nicolò Fagioli (24) - CM technical\n  Academy graduate, creative passing\n• Teun Koopmeiners (27) - CAM/CM\n  Dutch international, set-piece specialist\n• Douglas Luiz (27) - CM rotation\n  Brazilian flair, dribbling skills\n\n⚡ FORWARDS:\n• Dušan Vlahović (25) - ST main striker\n  Serbian international, clinical finisher\n• Jonathan David (25) - ST/LW new signing\n  Canadian speed merchant, versatile\n• Kenan Yıldız (20) - LW/RW rising star\n  Turkish wonderkid, future captain\n• Timothy Weah (25) - RW pace option\n  American winger, direct running\n• Jadon Sancho (25) - LW/RW loan signing\n  English international, creativity\n• Francisco Conceição (22) - RW prospect\n  Portuguese talent, manager's son\n\n📋 PREFERRED STARTING XI:\n        Di Gregorio\nCambiaso-Bremer-Gatti-Cabal\n   Locatelli-Thuram-McKennie\n  Yildiz-David-Vlahović\n\n🔄 KEY ROTATIONS:\n• Sancho rotates with wingers\n• Koopmeiners for creative games\n• Fagioli for possession-based matches\n• Danilo for defensive stability\n\n💪 SQUAD STRENGTHS:\n• Depth in all positions\n• Mix of youth and experience\n• Multiple tactical options\n• Strong set-piece threat\n• Pace on the wings\n\n🎯 AREAS FOR IMPROVEMENT:\n• Backup striker needed\n• Left-back competition\n• Creative midfielder depth\n• Leadership in big games`);
+        }
+
+        // Interactive Timeline Functions
+        function showTimeline() {
+            document.getElementById('timeline-section').classList.remove('hidden');
+            document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth' });
+            
+            // Animate timeline items with staggered delay
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.2}s`;
+            });
+        }
+
+        function closeTimeline() {
+            document.getElementById('timeline-section').classList.add('hidden');
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTimelineDetail(era) {
+            let details = '';
+            switch(era) {
+                case '1897':
+                    details = `🏛️ FOUNDATION ERA (1897)\n\n📅 November 1, 1897\n• Founded by students from Massimo d'Azeglio Lyceum\n• Original name: Sport-Club Juventus\n• First president: Eugenio Canfari\n• Colors: Pink and black (later changed to black & white)\n\n🎯 Early Years:\n• First match: vs Torinese FC (1-0 loss)\n• First trophy: Piedmont Championship (1900)\n• Stadium: Piazza d'Armi\n• Philosophy: "Winning isn't important, it's the only thing"`;
+                    break;
+                case '1950s':
+                    details = `👑 GOLDEN DYNASTY (1950-1960)\n\n🏆 5 Consecutive Serie A Titles (1950-1955)\n• Unprecedented dominance in Italian football\n• Stars: Giampiero Boniperti, John Charles\n• Manager: Jesse Carver, then Ljubiša Broćić\n\n⭐ Key Achievements:\n• 1950: Serie A Champions\n• 1952: Serie A Champions  \n• 1958: Serie A Champions\n• 1960: Serie A Champions\n• European Cup semi-finals (1959)\n\n🌟 Legendary Players:\n• Giampiero Boniperti (182 goals)\n• John Charles "Il Gigante Buono"\n• Omar Sívori (Argentine wizard)`;
+                    break;
+                case '1985':
+                    details = `🏆 EUROPEAN GLORY (1985)\n\n🥇 European Cup Final - May 29, 1985\n• Juventus 1-0 Liverpool\n• Venue: Heysel Stadium, Brussels\n• Scorer: Michel Platini (penalty)\n• Tragic events overshadowed the victory\n\n⭐ Squad Heroes:\n• Michel Platini (Ballon d'Or winner)\n• Zbigniew Boniek (Polish genius)\n• Gaetano Scirea (elegant defender)\n• Dino Zoff (legendary goalkeeper)\n\n🎖️ Historic Achievement:\n• First Italian club to win all three major European trophies\n• Completed the "European Treble"\n• Platini's third consecutive Ballon d'Or`;
+                    break;
+                case '1990s':
+                    details = `✨ DREAM TEAM ERA (1990-1999)\n\n🌟 Galácticos Before Real Madrid:\n• Roberto Baggio (1990-1995)\n• Zinedine Zidane (1996-2001)\n• Alessandro Del Piero (1993-2012)\n• Edgar Davids, Didier Deschamps\n\n🏆 Major Trophies:\n• Champions League (1996)\n• UEFA Cup (1993)\n• Serie A (1995, 1997, 1998)\n• Coppa Italia (1995)\n\n🎭 Iconic Moments:\n• Baggio's magical 1993 season\n• Zidane's Champions League final goal (1998)\n• Del Piero's rise to stardom\n• The most beautiful football ever played`;
+                    break;
+                case '2010s':
+                    details = `🔥 NINE IN A ROW (2011-2020)\n\n📈 Unprecedented Dominance:\n• 9 consecutive Serie A titles\n• 4 Coppa Italia victories\n• 2 Champions League finals\n• Antonio Conte revolution (2011-2014)\n\n⭐ Key Signings:\n• Andrea Pirlo (free transfer masterclass)\n• Carlos Tevez (El Apache)\n• Paul Pogba (academy graduate)\n• Arturo Vidal (warrior midfielder)\n\n🏟️ Stadium Revolution:\n• Juventus Stadium opened (2011)\n• First Italian club to own their stadium\n• 41,507 capacity\n• Modern football temple`;
+                    break;
+                case '2025':
+                    details = `🚀 NEW CHAPTER (2025)\n\n👨‍💼 Sérgio Conceição Era:\n• Appointed January 2025\n• 4-3-3 attacking philosophy\n• Porto Champions League experience\n• Focus on youth development\n\n🎯 Transfer Revolution:\n• Jonathan David (€40M from Lille)\n• Jadon Sancho (loan from Man United)\n• Teun Koopmeiners integration\n• Academy talents promoted\n\n🔮 Future Vision:\n• Return to Champions League glory\n• Sustainable transfer policy\n• New stadium expansion plans\n• Global brand development\n• "Fino alla fine" mentality restored`;
+                    break;
+            }
+            alert(details);
+        }
+
+        // News Dashboard Functions
+        function showDashboard() {
+            document.getElementById('news-dashboard').classList.remove('hidden');
+            document.getElementById('news-dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeDashboard() {
+            document.getElementById('news-dashboard').classList.add('hidden');
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95fa1efcb711d0f8',t:'MTc1MjU5MTUzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
